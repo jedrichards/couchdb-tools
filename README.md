@@ -1,9 +1,9 @@
 couchdb-tools
 =============
 
+`npm install coucbdb-tools --save`
+
 A library of handy functions for use when working with CouchDB documents. All functions are database adapter agnostic.
-
-
 
 Some functions are unique to this library, others are just wrappers around some of the best packages for the job from the Node.JS community - and which case thanks for your hard work :)
 
