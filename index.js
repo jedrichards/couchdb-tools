@@ -50,7 +50,7 @@ module.exports.normalise = function (collection) {
         } else {
             return {
                 _id: obj.id,
-                _rev: obj.rev
+                _rev: obj.value.rev
             }
         }
     });
