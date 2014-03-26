@@ -1,35 +1,30 @@
 var tools = require('./index');
 
-var ddoc = {
+var projects = {
     views: {
-        staticData: {
+        projectsById: {
             map: function (doc) {
-                if ( doc.type == "feature" || doc.type == "config" ) {
+                if ( doc.type == "project") {
                     emit(doc._id,doc);
-                }
-            }
-        },
-        featuresByPos: {
-            map: function (doc) {
-                if ( doc.type == "feature") {
-                    emit(doc.pos,doc);
                 }
             }
         }
     }
-};
+}
 
-ddoc = tools.ddoc(ddoc,'projects');
+var ddoc = tools.ddoc(projects,'projects');
 
 console.log(ddoc);
 
-var a = {foo:'bar'};
-var b = {foo:'baz',qux:'quux'};
+var a = {foo:'bar',baz:'qux'};
+var b = {foo:'quux',qux:'quuux'};
 
 console.log(tools.combine(a,b));
 
+tools.shortid(343983);
 console.log(tools.shortid());
-console.log(tools.shortid(334534));
+console.log(tools.shortid());
+console.log(tools.shortid());
 
 console.log(tools.slug('Hello world'));
 console.log(tools.slug('A test with symbols £'));
