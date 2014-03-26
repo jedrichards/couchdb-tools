@@ -95,7 +95,7 @@ oHeEydIXck
 
 #### `slug(text)`
 
-Converts a string into a URI-safe slug. Symbols are removed and foreign characters are coerced into to their English equivalent.
+Converts a string into a URI-safe slug. Symbols are removed and foreign characters are coerced into their English equivalent.
 
 ##### Example
 
