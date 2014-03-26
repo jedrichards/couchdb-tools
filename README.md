@@ -97,7 +97,7 @@ oHeEydIXck
 
 Converts a string into a URI-safe slug. Symbols are removed and foreign characters are coerced into to their English equivalent.
 
-#### Example
+##### Example
 
 ```javascript
 var tools = require('couchdb-tools');
