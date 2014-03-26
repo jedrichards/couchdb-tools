@@ -1,10 +1,14 @@
 {
   "name": "couchdb-tools",
   "version": "0.0.1",
-  "description": "CouchDB database adapter agnostic utility functions",
+  "description": "A library of handy functions for use when working with CouchDB documents.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jedrichards/couchdb-tools.git"
   },
   "author": "Jed Richards <jed@seisaku.co.uk> (http://seisaku.co.uk/)",
   "license": "MIT",
@@ -13,5 +17,15 @@
     "shortid": "~2.0.0",
     "slugg": "~0.1.2",
     "xtend": "~2.2.0"
+  },
+  "keywords": [
+    "couchdb",
+    "tools",
+    "utils",
+    "library",
+    "couch"
+  ],
+  "engines": {
+    "node": ">=0.10.25"
   }
 }

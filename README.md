@@ -1,7 +1,7 @@
 couchdb-tools
 =============
 
-Provides a library of handy functions for use when working with CouchDB documents. All functions are database adapter agnostic.
+A library of handy functions for use when working with CouchDB documents. All functions are database adapter agnostic.
 
 
 
