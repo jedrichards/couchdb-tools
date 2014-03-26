@@ -1,0 +1,11 @@
+{
+  "name": "couchdb-tools",
+  "version": "0.0.1",
+  "description": "CouchDB database adapter agnostic utility functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jed Richards <jed@seisaku.co.uk> (http://seisaku.co.uk/)",
+  "license": "MIT"
+}
