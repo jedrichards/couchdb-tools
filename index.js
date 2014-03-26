@@ -14,28 +14,17 @@ var shortid = require('shortid');
  * @return {object} A new design document object suitable for adding to a db
  */
 module.exports.ddoc = function (obj,name) {
-    function r (o) {
-        Object.keys(o).forEach(function (key) {
-            var value = o[key];
-            var type = typeof value;
-            if ( type === 'object' ) {
-                r(value);
-                return;
-            }
-            if ( type === 'function' ) {
-                value.toJSON = function () {
-                    var res = uglifyjs.minify('('+this.toString()+')();',{
-                        fromString: true,
-                        mangle: false,
-                        compress: false
-                    });
-                    return res.code.slice(1,res.code.length-4);
-                };
-            }
-        });
-        return o;
-    }
-    obj = JSON.parse(JSON.stringify(r(obj)));
+    obj = JSON.parse(JSON.stringify(obj,function (key,val) {
+        if ( typeof val == 'function' ) {
+            var res = uglifyjs.minify('('+val.toString()+')();',{
+                fromString: true,
+                mangle: false,
+                compress: false
+            });
+            return res.code.slice(1,res.code.length-4);
+        }
+        return val;
+    }));
     if ( name ) {
         obj._id = '_design/'+name;
     }
