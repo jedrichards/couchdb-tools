@@ -47,6 +47,26 @@ The following will be output to the console:
 
 ```
 
+#### `normalise(collection)`
+
+Documentation to do.
+
+#### `sync(current,old)`
+
+Documentation to do.
+
+#### `clone(obj,obj[,obj...])`
+
+Documentation to do.
+
+#### `find(collection,id)`
+
+Documentation to do.
+
+#### `equal(a,b)`
+
+Documentation to do.
+
 #### `combine(a,b)`
 
 Create a new object that is the result of copying the properties of the second parameter into the first.
