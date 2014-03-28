@@ -1,6 +1,6 @@
 {
   "name": "couchdb-tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A library of handy functions for use when working with CouchDB documents.",
   "main": "index.js",
   "scripts": {
