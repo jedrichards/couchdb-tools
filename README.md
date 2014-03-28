@@ -100,7 +100,7 @@ will produce the following output:
 ]
 ```
 
-You are now free to inspect or manipulate this array of documents freely and save back to CouchDB in a bulk operation.
+You can now inspect or manipulate this array of documents freely and save back to CouchDB in a bulk operation.
 
 #### `clone(obj)`
 
@@ -112,7 +112,7 @@ Find a document by `_id` in an array.
 
 #### `equal(a,b)`
 
-Compares two documents for deep equality. Document `_rev` values are ignored and can differ while still being considered equal.
+Compares two documents for deep equality. Document `_rev` values are ignored and can differ while their parent documents are still considered equal.
 
 #### `sync(current,old)`
 
