@@ -23,20 +23,15 @@ exports.ddoc = function (obj,name) {
 }
 
 module.exports.normalise = function (res) {
-    if ( !_.isArray(res) && _.isNumber(res.offset) ) {
-        res = res.rows;
-    }
-    if ( !_.isArray(res) ) {
+    var rows = res.rows;
+    if ( !_.isArray(rows) ) {
         return res;
     }
-    return res.map(function (obj) {
-        if ( _.isObject(obj.doc) && _.isString(obj.doc._id) ) {
-            return obj.doc;
+    return rows.map(function (row) {
+        if ( _.isObject(row.doc) && _.isString(row.doc._id) ) {
+            return row.doc;
         } else {
-            return {
-                _id: obj.id,
-                _rev: obj.value.rev
-            }
+            return row.value;
         }
     });
 }
