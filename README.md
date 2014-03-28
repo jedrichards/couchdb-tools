@@ -114,15 +114,6 @@ Find a document by `_id` in an array.
 
 Compares two documents for deep equality. Document `_rev` values are ignored and can differ while their parent documents are still considered equal.
 
-#### `sync(current,old)`
-
-Algorithm for comparing two collections of documents by document id. One collection is deemed to contain 'new' or 'latest' documents, the other 'old' documents. The returned result object categorises the documents into a set of arrays: `onlyOld`, `onlyNew`, `bothAndEqual` and `bothAndUnEqual`.
-
-- `onlyOld` Documents in this array only exist in the 'old' collection.
-- `onlyNew` Documents in this array only exist in the 'new' collection.
-- `bothAndEqual` Documents in this array exist in both collections, and moreover contain equal contents (aside from their `_rev` value).
-- `bothAndUnEqual` Documents in this array exist in both collections, but have different contents.
-
 #### `combine(obj,obj[,obj,...])`
 
 Create a new document that is the result of copying the properties of an arbitrary number of documents into it. Documents at the right end of the parameter list are given precedent.
