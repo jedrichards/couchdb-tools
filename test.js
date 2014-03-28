@@ -67,3 +67,23 @@ var old = [
 
 var synced = tools.sync(current,old);
 console.log(synced);
+
+var equalityA = {
+    foo: 'bar',
+    baz: [1,2,3],
+    qux: {
+        quux: 'quuux'
+    }
+}
+
+var equalityB = {
+    foo: 'bar',
+    baz: [1,2,3],
+    qux: {
+        quux: 'quuux'
+    }
+}
+
+console.log('\n>>> equal\n');
+
+console.log(tools.equal(equalityA,equalityB));

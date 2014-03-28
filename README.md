@@ -1,15 +1,14 @@
-couchdb-tools
-=============
+# couchdb-tools
 
 `npm install coucbdb-tools --save`
 
-A library of handy functions for use when working with CouchDB documents. All functions are database adapter agnostic.
+A Node.js library of handy functions for use when working with CouchDB documents. All functions are database adapter agnostic.
 
 Some functions are unique to this library, others are just wrappers around some of the best packages for the job from the Node.JS community - and in which case thanks for your hard work :)
 
 #### `ddoc(obj[,name])`
 
-Build a JSON/CouchDB compatible design document from a native JavaScript object. The main utility of this function is to translate any map/reduce functions encountered in the design document into tidy JSON-safe strings.
+Build a JSON/CouchDB compatible design document from a native JavaScript object. The main utility of this function is to translate any functions encountered in the design document into tidy JSON-safe strings. Design documents stored as valid JavaScript objects alongside your app source code rather than as raw JSON can benefit properly from version control and linting.
 
 The `name` parameter is optional, and only required if you wish to create the design document's id too.
 
@@ -17,6 +16,7 @@ The `name` parameter is optional, and only required if you wish to create the de
 
 ```javascript
 var tools = require('couchdb-tools');
+
 var projects = {
     views: {
         projectsById: {
@@ -30,6 +30,7 @@ var projects = {
 }
 
 var projectsDesignDoc = tools.ddoc(projects,'projects');
+
 console.log(projectsDesignDoc);
 ```
 
@@ -47,29 +48,84 @@ The following will be output to the console:
 
 ```
 
-#### `normalise(collection)`
+#### `normalise(res)`
 
-Documentation to do.
+Normalise a CouchDB result set into a flat array of document objects containing `_id` and `_rev` properties. The function will try to intelligently deal with the presence or lack of actual documents in the result as defined by the `include_docs` parameter.
 
-#### `sync(current,old)`
+##### Example
 
-Documentation to do.
+Given a raw CouchDB result set object similar to,
 
-#### `clone(obj,obj[,obj...])`
+```javascript
+{
+    total_rows: 10,
+    offset: 0,
+    rows: [
+        {
+            id: '...',
+            key: '...',
+            value: {...},
+            doc: {...}
+        },
+        { ... },
+        { ... },
+        etc.
+    ]
+}
+```
 
-Documentation to do.
+and invoking `normalise` on this object,
+
+```javascript
+var tools = require('couchdb-tools');
+
+res = tools.normalise(res);
+
+console.log(res);
+```
+
+will produce the following output:
+
+```javascript
+[
+    {
+        _id: '...',
+        _rev: '...',
+        propA: '...',
+        propB: '...'
+    },
+    { ... },
+    { ... },
+    etc.
+]
+```
+
+You are now free to inspect or manipulate this array of documents freely and save back to CouchDB in a bulk operation.
+
+#### `clone(obj)`
+
+Returns a deep clone of a document. Use it when you need to copy and manipulate a document without fear of corrupting the original data set.
 
 #### `find(collection,id)`
 
-Documentation to do.
+Find a document by `_id` in an array.
 
 #### `equal(a,b)`
 
-Documentation to do.
+Compares two documents for deep equality. Document `_rev` values are ignored and can differ while still being considered equal.
 
-#### `combine(a,b)`
+#### `sync(current,old)`
 
-Create a new object that is the result of copying the properties of the second parameter into the first.
+Algorithm for comparing two collections of documents by document id. One collection is deemed to contain 'new' or 'latest' documents, the other 'old' documents. The returned result object categorises the documents into a set of arrays: `onlyOld`, `onlyNew`, `bothAndEqual` and `bothAndUnEqual`.
+
+- `onlyOld` Documents in this array only exist in the 'old' collection.
+- `onlyNew` Documents in this array only exist in the 'new' collection.
+- `bothAndEqual` Documents in this array exist in both collections, and moreover contain equal contents (aside from their `_rev` value).
+- `bothAndUnEqual` Documents in this array exist in both collections, but have different contents.
+
+#### `combine(obj,obj[,obj,...])`
+
+Create a new document that is the result of copying the properties of an arbitrary number of documents into it. Documents at the right end of the parameter list are given precedent.
 
 ##### Example
 
@@ -105,7 +161,7 @@ console.log(tools.shortid());
 console.log(tools.shortid());
 ```
 
-Similar contents to the following will be output to the console:
+Output similar to the following will be generated:
 
 ```
 FG2Ws27qck
@@ -128,4 +184,38 @@ The following will be output to the console:
 
 ```
 hello-world
+```
+
+#### `sync(newColl,oldColl)`
+
+Algorithm for synchronising two collections of documents by `_id`. Useful for synchronising a local data set with the db (for example design documents or static app config data etc.).
+
+The algorithm will compare the two sets of documents and determine which documents,
+
+- only exist in the old set
+- only exist in the new set
+- exist in both and are identical
+- exist in both and are different
+
+It is left to your app code to determine how to handle each set. The results are exposed in the returned object, which has the following structure:
+
+```javascript
+{
+    onlyOld: [ ... ],
+    onlyNew: [ ... ],
+    bothAndEqual: [
+        {
+            old: {},
+            new: {}
+        },
+        { ... }
+    ],
+    bothAndUnEqual: [
+        {
+            old: {},
+            new: {}
+        },
+        { ... }
+    ]
+}
 ```
