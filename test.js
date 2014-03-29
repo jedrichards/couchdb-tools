@@ -18,13 +18,13 @@ var ddoc = tools.ddoc(projects,'projects');
 
 console.log(ddoc);
 
-console.log('\n>>> combine\n');
+console.log('\n>>> extend\n');
 
 var a = {foo:'bar',baz:'qux'};
 var b = {foo:'quux',qux:'quuux'};
 var c = {quuuux:'quuuuux'};
 
-console.log(tools.combine(a,b,c));
+console.log(tools.extend(a,b,c));
 
 console.log('\n>>> shortid\n');
 

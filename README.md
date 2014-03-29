@@ -110,11 +110,15 @@ Returns a deep clone of a document. Use it when you need to copy and manipulate 
 
 Find a document by `_id` in an array.
 
+#### `setEach(collection,key,value)`
+
+Set a key to a certain value in every document in a collection.
+
 #### `equal(a,b)`
 
 Compares two documents for deep equality. Document `_rev` values are ignored and can differ while their parent documents are still considered equal.
 
-#### `combine(obj,obj[,obj,...])`
+#### `extend(obj,obj[,obj,...])`
 
 Create a new document that is the result of copying the properties of an arbitrary number of documents into it. Documents at the right end of the parameter list are given precedent.
 

@@ -46,6 +46,12 @@ exports.find = function (collection,id) {
     });
 }
 
+exports.setEach = function (collection,key,value) {
+    collection.forEach(function (obj) {
+        obj[key] = value;
+    });
+}
+
 exports.equal = function (a,b) {
     var aRev = a._rev;
     var bRev = b._rev;
@@ -57,10 +63,7 @@ exports.equal = function (a,b) {
     return equal;
 }
 
-exports.combine = function () {
-    var args = Array.prototype.slice.call(arguments);
-    return extend.apply(null,args);
-}
+exports.extend = extend;
 
 exports.shortid = function (seed) {
     if ( typeof seed != 'undefined' ) {
@@ -69,9 +72,7 @@ exports.shortid = function (seed) {
     return shortid.generate()
 }
 
-exports.slug = function (text) {
-    return slug(text);
-}
+exports.slug = slug;
 
 exports.sync = function (newColl,oldColl) {
     var onlyOld = [];
