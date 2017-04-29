@@ -5,7 +5,7 @@ console.log('\n>>> ddoc\n');
 var projects = {
     views: {
         projectsById: {
-            map: function (doc) {
+            map(doc) {
                 if ( doc.type == "project") {
                     emit(doc._id,doc);
                 }

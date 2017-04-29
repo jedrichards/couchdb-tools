@@ -4,8 +4,8 @@ var slug = require('slugg');
 var shortid = require('shortid');
 var _ = require('lodash');
 
-exports.ddoc = function (obj,name) {
-    obj = JSON.parse(JSON.stringify(obj,function (key,val) {
+exports.ddoc = (obj, name) => {
+    obj = JSON.parse(JSON.stringify(obj,(key, val) => {
         if ( typeof val == 'function' ) {
             var res = uglifyjs.minify('('+val.toString()+')();',{
                 fromString: true,
@@ -22,12 +22,12 @@ exports.ddoc = function (obj,name) {
     return obj;
 }
 
-module.exports.normalise = function (res) {
+module.exports.normalise = res => {
     var rows = res.rows;
     if ( !_.isArray(rows) ) {
         return res;
     }
-    return rows.map(function (row) {
+    return rows.map(row => {
         if ( _.isObject(row.doc) && _.isString(row.doc._id) ) {
             return row.doc;
         } else {
@@ -36,23 +36,17 @@ module.exports.normalise = function (res) {
     });
 }
 
-exports.clone = function (obj) {
-    return JSON.parse(JSON.stringify(obj));
-}
+exports.clone = obj => JSON.parse(JSON.stringify(obj))
 
-exports.find = function (collection,id) {
-    return _.find(collection,function (item) {
-        return item._id === id;
-    });
-}
+exports.find = (collection, id) => _.find(collection,item => item._id === id)
 
-exports.setEach = function (collection,key,value) {
-    collection.forEach(function (obj) {
+exports.setEach = (collection, key, value) => {
+    collection.forEach(obj => {
         obj[key] = value;
     });
 }
 
-exports.equal = function (a,b) {
+exports.equal = (a, b) => {
     var aRev = a._rev;
     var bRev = b._rev;
     delete a._rev;
@@ -65,7 +59,7 @@ exports.equal = function (a,b) {
 
 exports.extend = extend;
 
-exports.shortid = function (seed) {
+exports.shortid = seed => {
     if ( typeof seed != 'undefined' ) {
         shortid.seed(seed);
     }
@@ -74,17 +68,17 @@ exports.shortid = function (seed) {
 
 exports.slug = slug;
 
-exports.sync = function (newColl,oldColl) {
+exports.sync = (newColl, oldColl) => {
     var onlyOld = [];
     var bothAndEqual = [];
     var bothAndUnEqual = [];
     var onlyNew = [];
-    oldColl.forEach(function (oldDoc) {
+    oldColl.forEach(oldDoc => {
         if ( !exports.find(newColl,oldDoc._id) ) {
             onlyOld.push(oldDoc);
         }
     });
-    newColl.forEach(function (newDoc) {
+    newColl.forEach(newDoc => {
         var oldDoc = exports.find(oldColl,newDoc._id);
         if ( oldDoc ) {
             if ( !exports.equal(oldDoc,newDoc) ) {
@@ -103,9 +97,9 @@ exports.sync = function (newColl,oldColl) {
         }
     });
     return {
-        onlyOld: onlyOld,
-        bothAndEqual: bothAndEqual,
-        bothAndUnEqual: bothAndUnEqual,
-        onlyNew: onlyNew
-    }
+        onlyOld,
+        bothAndEqual,
+        bothAndUnEqual,
+        onlyNew
+    };
 }
